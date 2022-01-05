@@ -51,7 +51,7 @@ prior_pdf(t) = pdf.(Normal(prior_mean, prior_std), t)
 ll_prior(x) = ll_d(x) * prior_pdf(x)
 
 # Integrate normalization coeff.
-k_val, _ = quadgk(ll_prior, -Inf, Inf)
+k_val, _ = quadgk(ll_prior, 0, 100000)
 
 # Calculate posterior distribution
 post_pdf(t) = (1/k_val) .* ll_prior(t)
@@ -64,5 +64,5 @@ end;
 
 # Calculate posterior mean
 post_pdf_t(t) = t .* post_pdf(t)
-mean_post, _ = quadgk(post_pdf_t, -Inf, Inf)
+mean_post, _ = quadgk(post_pdf_t, 0, 1e5)
 println("Posterior mean: $(mean_post)")
