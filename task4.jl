@@ -59,3 +59,17 @@ begin
 end
 
 
+# Exploring different correlations
+rho_corr(dx, c) = exp(-dx/c)
+xi = range(-3, stop=1, length=1000)
+xi_i = xi' .* ones(length(xi))
+c = -1:0.2:0.8
+c_i = ones(length(c))' .* c
+begin
+    gr()
+    for c_val in [0.5]
+        plot(xi, rho_corr.(xi, c_val), label="c= $(c_val)")
+    end
+    ylabel!("rho")
+    xlabel!("sensor distance")
+end
